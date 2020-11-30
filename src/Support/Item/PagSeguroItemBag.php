@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\PagSeguro\Model\Item;
+namespace Omnipay\PagSeguro\Support\Item;
 
 use Omnipay\Common\ItemBag;
 use Omnipay\Common\ItemInterface;

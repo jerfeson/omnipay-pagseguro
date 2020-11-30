@@ -21,6 +21,7 @@ class PurchaseRequest extends AbstractRequest
      * @var string
      */
     protected $resource = 'checkout';
+    
 
     /**
      * @var string
@@ -85,6 +86,26 @@ class PurchaseRequest extends AbstractRequest
     public function getData()
     {
         $this->validate('currency', 'transactionId');
+
+        $data = $this->getBaseData();
+        $data['currency'] = $this->getCurrency();
+        $data['extraAmount'] = $this->getExtraAmount();
+        $data['reference'] = $this->getTransactionId();
+        $data['redirectURL'] = $this->getReturnUrl();
+        $data['notificationURL'] = $this->getNotifyUrl();
+        $data['returnURL'] = $this->getReturnUrl();
+
+        $i = 1;
+        foreach ($this->getItems()->all() as $item) {
+            $data["itemId$i"]          = $item->getName();
+            $data["itemDescription$i"] = $item->getDescription();
+            $data["itemAmount$i"]      = $this->formatCurrency($item->getPrice());
+            $data["itemQuantity$i"]    = $item->getQuantity();
+            $data["itemWeight$i"]      = $item->getWeight();
+            $i++;
+        }
+
+        return $data;
     }
 
     /**

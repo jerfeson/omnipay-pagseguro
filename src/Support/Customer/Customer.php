@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnipay\PagSeguro\Model\Customer;
+namespace Omnipay\PagSeguro\Support\Customer;
 
 /**
- * Class Phone.
+ * Class Customer.
  *
  * @author Jerfeson Guerreiro <jerfeson_guerreiro@hotmail.com>
  *
@@ -11,6 +11,6 @@ namespace Omnipay\PagSeguro\Model\Customer;
  *
  * @version 1.0.0
  */
-class Phone
+class Customer
 {
 }

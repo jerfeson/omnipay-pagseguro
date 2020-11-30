@@ -55,6 +55,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
+     * @return mixed
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
+    
+    /**
      * @param mixed $data
      *
      * @return ResponseInterface|Response
@@ -64,19 +72,28 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $httpResponse = $this->httpClient->request(
             'POST',
             $this->getEndpoint(),
-            [],
+            $this->getHeaders(),
             http_build_query($data, '', '&')
         );
 
-        return $this->createResponse($httpResponse->getBody()->getContents());
+        $xml = simplexml_load_string($httpResponse->getBody()->getContents(), "SimpleXMLElement", LIBXML_NOCDATA);
+        $json = json_encode($xml);
+        $array = json_decode($json,TRUE);
+        return $this->createResponse($array);
+    }
+
+    public function getHeaders()
+    {
+        return ['Content-Type' => 'application/x-www-form-urlencoded'];
     }
 
     /**
      * @return string
      */
-    protected function getEndpoint()
+    public function getEndpoint()
     {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+        $endPoint = $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+        return  "{$endPoint}/{$this->getResource()}";
     }
 
     /**
@@ -87,5 +104,17 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected function createResponse($data)
     {
         return $this->response = new Response($this, $data);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBaseData() {
+
+        $data = [];
+        $data['email'] = $this->getEmail();
+        $data['token'] = $this->getToken();
+
+        return $data;
     }
 }
