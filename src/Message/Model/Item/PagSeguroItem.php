@@ -5,16 +5,13 @@ namespace Omnipay\PagSeguro\Model\Item;
 use Omnipay\Common\Item;
 
 /**
- * Class PagSeguroItem
- *
- * @package Omnipay\PagSeguro\Model\Item
+ * Class PagSeguroItem.
  *
  * @author Jerfeson Guerreiro <jerfeson_guerreiro@hotmail.com>
  *
  * @since 1.0.0
  *
  * @version 1.0.0
- *
  */
 class PagSeguroItem extends Item
 {
@@ -28,6 +25,7 @@ class PagSeguroItem extends Item
 
     /**
      * @param $value
+     *
      * @return PagSeguroItem
      */
     public function setWeight($value)

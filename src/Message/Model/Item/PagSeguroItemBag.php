@@ -6,21 +6,18 @@ use Omnipay\Common\ItemBag;
 use Omnipay\Common\ItemInterface;
 
 /**
- * Class PagSeguroItemBag
- *
- * @package Omnipay\PagSeguro\Model\Item
+ * Class PagSeguroItemBag.
  *
  * @author Jerfeson Guerreiro <jerfeson_guerreiro@hotmail.com>
  *
  * @since 1.0.0
  *
  * @version 1.0.0
- *
  */
 class PagSeguroItemBag extends ItemBag
 {
     /**
-     * Add an item to the bag
+     * Add an item to the bag.
      *
      * @see Item
      *

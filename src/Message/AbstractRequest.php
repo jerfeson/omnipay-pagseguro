@@ -5,16 +5,13 @@ namespace Omnipay\PagSeguro\Message;
 use Omnipay\Common\Message\ResponseInterface;
 
 /**
- * Class AbstractRequest
- *
- * @package Omnipay\PagSeguro\Message
+ * Class AbstractRequest.
  *
  * @author Jerfeson Guerreiro <jerfeson_guerreiro@hotmail.com>
  *
  * @since 1.0.0
  *
  * @version 1.0.0
- *
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
@@ -31,6 +28,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param $value
+     *
      * @return AbstractRequest
      */
     public function setEmail($value)
@@ -48,6 +46,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param string $value
+     *
      * @return AbstractRequest
      */
     public function setToken($value)
@@ -57,6 +56,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param mixed $data
+     *
      * @return ResponseInterface|Response
      */
     public function sendData($data)
@@ -81,6 +81,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param $data
+     *
      * @return Response
      */
     protected function createResponse($data)
