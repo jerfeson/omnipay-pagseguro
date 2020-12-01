@@ -9,9 +9,7 @@ use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Common\Message\ResponseInterface;
 
 /**
- * Class Gateway
- *
- * @package Omnipay\PagSeguro
+ * Class Gateway.
  *
  * @author Jerfeson Guerreiro <jerfeson_guerreiro@hotmail.com>
  *
@@ -19,24 +17,19 @@ use Omnipay\Common\Message\ResponseInterface;
  *
  * @version 1.0.0
  *
- * @link https://dev.pagseguro.uol.com.br/docs/checkout-web
+ * @see https://dev.pagseguro.uol.com.br/docs/checkout-web
  *
  * @method ResponseInterface authorize(array $options = [])
  * @method ResponseInterface completeAuthorize(array $options = [])
  * @method ResponseInterface capture(array $options = [])
- * @method ResponseInterface refund(array $options = [])
  * @method ResponseInterface void(array $options = [])
  * @method ResponseInterface createCard(array $options = [])
  * @method ResponseInterface updateCard(array $options = [])
  * @method ResponseInterface deleteCard(array $options = [])
- *
- * @method NotificationInterface acceptNotification(array $options = [])
- * @method RequestInterface completePurchase(array $options = [])
  * @method RequestInterface fetchTransaction(array $options = [])
  */
 class Gateway extends AbstractGateway
 {
-
     /**
      * @return string
      */
@@ -67,13 +60,13 @@ class Gateway extends AbstractGateway
 
     /**
      * @param $value
+     *
      * @return Gateway
      */
     public function setEmail($value)
     {
         return $this->setParameter('email', $value);
     }
-
 
     /**
      * @return mixed
@@ -85,6 +78,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param $value
+     *
      * @return Gateway
      */
     public function setToken($value)
@@ -94,10 +88,42 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
+     *
      * @return AbstractRequest|RequestInterface
      */
     public function purchase(array $parameters = [])
     {
         return $this->createRequest('\Omnipay\PagSeguro\Message\PurchaseRequest', $parameters);
     }
+
+    /**
+     * @param array $parameters
+     *
+     * @return AbstractRequest|RequestInterface
+     */
+    public function acceptNotification(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\PagSeguro\Message\NotificationRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return AbstractRequest|RequestInterface
+     */
+    public function completePurchase(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\PagSeguro\Message\NotificationRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return AbstractRequest|RequestInterface
+     */
+    public function refund(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\PagSeguro\Message\RefundRequest', $parameters);
+    }
+
 }

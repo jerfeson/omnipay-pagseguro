@@ -4,19 +4,19 @@ namespace Omnipay\PagSeguro\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\ItemBag;
-use Omnipay\PagSeguro\Model\Item\PagSeguroItemBag;
+use Omnipay\PagSeguro\Support\Item\PagSeguroItemBag;
 
 /**
- * Class PurchaseRequest
  *
- * @package Omnipay\PagSeguro\Message
+ * @see https://dev.pagseguro.uol.com.br/page/quickstart-checkout-pagseguro-redirecionamento
+
+ * Class PurchaseRequest.
  *
  * @author Jerfeson Guerreiro <jerfeson_guerreiro@hotmail.com>
  *
  * @since 1.0.0
  *
  * @version 1.0.0
- *
  */
 class PurchaseRequest extends AbstractRequest
 {
@@ -24,6 +24,17 @@ class PurchaseRequest extends AbstractRequest
      * @var string
      */
     protected $resource = 'checkout';
+
+    /**
+     * @var string
+     */
+    protected $version = '2';
+
+    /**
+     * @var string
+     */
+    protected $method = 'POST';
+
 
     /**
      * @var string
@@ -40,6 +51,7 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @param $value
+     *
      * @return PurchaseRequest
      */
     public function setShippingType($value)
@@ -57,6 +69,7 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @param $value
+     *
      * @return PurchaseRequest
      */
     public function setShippingCost($value)
@@ -66,6 +79,7 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @param array|ItemBag $items
+     *
      * @return PurchaseRequest
      */
     public function setItems($items)
@@ -78,17 +92,38 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @return mixed|void
      * @throws InvalidRequestException
+     *
+     * @return mixed|void
      */
     public function getData()
     {
         $this->validate('currency', 'transactionId');
 
+        $data = $this->getBaseData();
+        $data['currency'] = $this->getCurrency();
+        $data['extraAmount'] = $this->getExtraAmount();
+        $data['reference'] = $this->getTransactionId();
+        $data['redirectURL'] = $this->getReturnUrl();
+        $data['notificationURL'] = $this->getNotifyUrl();
+        $data['returnURL'] = $this->getReturnUrl();
+
+        $i = 1;
+        foreach ($this->getItems()->all() as $item) {
+            $data["itemId$i"]          = $item->getName();
+            $data["itemDescription$i"] = $item->getDescription();
+            $data["itemAmount$i"]      = $this->formatCurrency($item->getPrice());
+            $data["itemQuantity$i"]    = $item->getQuantity();
+            $data["itemWeight$i"]      = $item->getWeight();
+            $i++;
+        }
+
+        return $data;
     }
 
     /**
      * @param $value
+     *
      * @return PurchaseRequest
      */
     public function setExtraAmount($value)
@@ -97,8 +132,9 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @return string
      * @throws InvalidRequestException
+     *
+     * @return string
      */
     public function getExtraAmount()
     {
@@ -106,7 +142,7 @@ class PurchaseRequest extends AbstractRequest
 
         if ($extraAmount !== null && $extraAmount !== 0) {
             if ($this->getCurrencyDecimalPlaces() > 0) {
-                if (is_int($extraAmount) || (is_string($extraAmount) && strpos((string) $extraAmount, '.') === false)) {
+                if (is_int($extraAmount) || (is_string($extraAmount) && strpos((string)$extraAmount, '.') === false)) {
                     throw new InvalidRequestException(
                         'Please specify extra amount as a string or float, with decimal places.'
                     );
