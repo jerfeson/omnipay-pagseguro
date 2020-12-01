@@ -1,13 +1,13 @@
 # Omnipay: PagSeguro
 **PagSeguro driver for the Omnipay PHP payment processing library** 
 
-[Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
+[Omnipay] is a framework agnostic, multi-gateway payment
 processing library for PHP. This package implements PagSeguro support for Omnipay.
 
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `league/omnipay` and `jerfeson/omnipay-pagseguro` with Composer:
+Omnipay is installed via [Composer]. To install, simply require `league/omnipay` and `jerfeson/omnipay-pagseguro` with Composer:
 
 ```
 composer require league/omnipay jerfeson/omnipay-pagseguro
@@ -15,7 +15,7 @@ composer require league/omnipay jerfeson/omnipay-pagseguro
 
 ## Basic Usage
 
-For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
+For general usage instructions, please see the main [Omnipay]
 repository.
 
 ##Sample
@@ -53,15 +53,36 @@ $response = $gateway->purchase(
 
 ```
 
+## Roadmap
+
+ - [ ] more methods
+ - [ ] more code examples
+ 
+## Contributing
+
+ - welcome to discuss a bugs, features and ideas.
+ 
+  
+## License
+
+jerfeson/omnipay-pagseguro is release under the MIT license.
+ 
 ## Support
 
 If you are having general issues with Omnipay, we suggest posting on
-[Stack Overflow](http://stackoverflow.com/). Be sure to add the
-[omnipay tag](http://stackoverflow.com/questions/tagged/omnipay) so it can be easily found.
+[Stack Overflow]. Be sure to add the
+[omnipay tag] so it can be easily found.
 
 If you want to keep up to date with release anouncements, discuss ideas for the project,
-or ask more detailed questions, there is also a [mailing list](https://groups.google.com/forum/#!forum/omnipay) which
+or ask more detailed questions, there is also a [mailing list] which
 you can subscribe to.
 
-If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/jerfeson/omnipay-pagseguro/issues),
+If you believe you have found a bug, please report it using the [GitHub issue tracker],
 or better yet, fork the library and submit a pull request.
+
+[Omnipay]:https://github.com/thephpleague/omnipay
+[Stack Overflow]:http://stackoverflow.com/
+[omnipay tag]:http://stackoverflow.com/questions/tagged/omnipay
+[mailing list]:https://groups.google.com/forum/#!forum/omnipay
+[GitHub issue tracker]:https://github.com/jerfeson/omnipay-pagseguro/issues
+[Composer]:http://getcomposer.org/
