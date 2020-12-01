@@ -30,20 +30,20 @@ $gateway = $this->getGateway();
 $items = [];
 foreach ($params->items as $item) {
     $items[] = [
-        'number' => $item->id,
-        'quantity' => $item->quantity,
-        'name' => $item->name,
-        'description' => $item->description,
-        'price' => $item->price,
-        'weight' => $item->weight
+        'number' => $item->id, // 1, 2
+        'quantity' => $item->quantity, // 10, 20
+        'name' => $item->name, // sample product 1, sample product 2
+        'description' => $item->description, // sample description 1, sample description 2
+        'price' => $item->price, // 10.00, 40.00
+        'weight' => $item->weight // 1, 1
     ];
 }
 
 $response = $gateway->purchase(
     [
-        'transactionId' => $params->id,
-        'amount' => $params->value,
-        'currency' => $params->currency,
+        'transactionId' => $params->id, // 1
+        'amount' => $params->value, //50.00
+        'currency' => $params->currency, //BRL
         'returnUrl' => 'http://example.com/return',
         'cancelUrl' => 'http://example.com/cancel',
         'NotifyUrl' => 'http://example.com/notify',
