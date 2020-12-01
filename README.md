@@ -18,6 +18,41 @@ composer require league/omnipay jerfeson/omnipay-pagseguro
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
 
+##Sample
+
+
+```php
+// purchase
+    
+$params = $this->getParams();
+$gateway = $this->getGateway();
+
+$items = [];
+foreach ($params->items as $item) {
+    $items[] = [
+        'number' => $item->id,
+        'quantity' => $item->quantity,
+        'name' => $item->name,
+        'description' => $item->description,
+        'price' => $item->price,
+        'weight' => $item->weight
+    ];
+}
+
+$response = $gateway->purchase(
+    [
+        'transactionId' => $params->id,
+        'amount' => $params->value,
+        'currency' => $params->currency,
+        'returnUrl' => 'http://example.com/return',
+        'cancelUrl' => 'http://example.com/cancel',
+        'NotifyUrl' => 'http://example.com/notify',
+        'items' => $items
+    ]
+)->send();
+
+```
+
 ## Support
 
 If you are having general issues with Omnipay, we suggest posting on
