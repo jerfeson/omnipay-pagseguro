@@ -28,7 +28,11 @@ class Response extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return isset($this->data['code']) && isset($this->data['date']);
+        if (isset($this->data['code']) && isset($this->data['date']) || reset($this->data) === 'OK') {
+            return true;
+        }
+
+        return false;
     }
 
     /**

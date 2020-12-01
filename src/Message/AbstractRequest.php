@@ -15,9 +15,9 @@ use Omnipay\Common\Message\ResponseInterface;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $liveEndpoint = 'https://ws.pagseguro.uol.com.br/v2';
-    protected $testEndpoint = 'https://ws.sandbox.pagseguro.uol.com.br/v2';
-
+    protected $liveEndpoint = 'https://ws.pagseguro.uol.com.br/v';
+    protected $testEndpoint = 'https://ws.sandbox.pagseguro.uol.com.br/v';
+    
     /**
      * @return mixed
      */
@@ -61,6 +61,22 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->resource;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
     
     /**
      * @param mixed $data
@@ -69,17 +85,37 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->request(
-            'POST',
-            $this->getEndpoint(),
-            $this->getHeaders(),
-            http_build_query($data, '', '&')
-        );
+        $httpResponse = $this->getHttp($data);
+
+        if ($httpResponse->getStatusCode() != 200 && $httpResponse->getStatusCode() != 400) {
+                $array = [
+                    'error' => [
+                        'code' => $httpResponse->getStatusCode(),
+                        'message' => $httpResponse->getReasonPhrase()
+                    ]
+                ];
+
+            return $this->createResponse($array);
+        }
 
         $xml = simplexml_load_string($httpResponse->getBody()->getContents(), "SimpleXMLElement", LIBXML_NOCDATA);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
         return $this->createResponse($array);
+
+    }
+
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function getHttp($data)
+    {
+        return $this->httpClient->request(
+            $this->getMethod(),
+            $this->getEndpoint(),
+            $this->getHeaders(),
+            http_build_query($data, '', '&')
+        );
     }
 
     public function getHeaders()
@@ -93,7 +129,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function getEndpoint()
     {
         $endPoint = $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
-        return  "{$endPoint}/{$this->getResource()}";
+        return  "{$endPoint}{$this->getVersion()}/{$this->getResource()}";
     }
 
     /**

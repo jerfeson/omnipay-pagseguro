@@ -4,9 +4,12 @@ namespace Omnipay\PagSeguro\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\ItemBag;
-use Omnipay\PagSeguro\Model\Item\PagSeguroItemBag;
+use Omnipay\PagSeguro\Support\Item\PagSeguroItemBag;
 
 /**
+ *
+ * @see https://dev.pagseguro.uol.com.br/page/quickstart-checkout-pagseguro-redirecionamento
+
  * Class PurchaseRequest.
  *
  * @author Jerfeson Guerreiro <jerfeson_guerreiro@hotmail.com>
@@ -21,7 +24,17 @@ class PurchaseRequest extends AbstractRequest
      * @var string
      */
     protected $resource = 'checkout';
-    
+
+    /**
+     * @var string
+     */
+    protected $version = '2';
+
+    /**
+     * @var string
+     */
+    protected $method = 'POST';
+
 
     /**
      * @var string

@@ -22,13 +22,10 @@ use Omnipay\Common\Message\ResponseInterface;
  * @method ResponseInterface authorize(array $options = [])
  * @method ResponseInterface completeAuthorize(array $options = [])
  * @method ResponseInterface capture(array $options = [])
- * @method ResponseInterface refund(array $options = [])
  * @method ResponseInterface void(array $options = [])
  * @method ResponseInterface createCard(array $options = [])
  * @method ResponseInterface updateCard(array $options = [])
  * @method ResponseInterface deleteCard(array $options = [])
- * @method NotificationInterface acceptNotification(array $options = [])
- * @method RequestInterface completePurchase(array $options = [])
  * @method RequestInterface fetchTransaction(array $options = [])
  */
 class Gateway extends AbstractGateway
@@ -98,4 +95,35 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\PagSeguro\Message\PurchaseRequest', $parameters);
     }
+
+    /**
+     * @param array $parameters
+     *
+     * @return AbstractRequest|RequestInterface
+     */
+    public function acceptNotification(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\PagSeguro\Message\NotificationRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return AbstractRequest|RequestInterface
+     */
+    public function completePurchase(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\PagSeguro\Message\NotificationRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return AbstractRequest|RequestInterface
+     */
+    public function refund(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\PagSeguro\Message\RefundRequest', $parameters);
+    }
+
 }
